@@ -3,148 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Vitals Tracker</title>
+    <title>Family Vitals Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* -------------------------------------------------------------------------- */
+        /* JOYFUL & WARM THEME DESIGN */
+        /* -------------------------------------------------------------------------- */
         :root {
-            --primary: #4a90e2;
-            --success: #2ecc71;
-            --warning: #f1c40f;
-            --danger: #e74c3c;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
+            --bg-main: #f3f9f6; /* Soft cream/mint */
+            --bg-accent-wave: #def0e5; /* Warm organic green */
+            --card-bg: #ffffff;
+            --text-title: #2c4a3e; /* Deep forest green instead of harsh black */
+            --text-body: #4a5d55;
+            --primary-mint: #42b883;
+            --btn-orange: #e09653;
+            --bp-accent: #4a90e2;
+            --bs-accent: #f39c12;
+            --radius-main: 24px;
+            --radius-inner: 16px;
+            --shadow: 0 12px 30px rgba(162, 189, 175, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f0f4f8;
-            color: var(--dark);
-            padding: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(180deg, var(--bg-accent-wave) 0%, var(--bg-main) 400px, var(--bg-main) 100%);
+            color: var(--text-body);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 950px;
         }
 
+        /* -------------------------------------------------------------------------- */
+        /* HEADER (With cute animated accents) */
+        /* -------------------------------------------------------------------------- */
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .top-banner {
+            display: inline-block;
+            background: #fdf6e2;
+            color: #b07d22;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         header h1 {
-            color: var(--primary);
-            margin-bottom: 5px;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-title);
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .dashboard {
+        header p {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* TWO-COLUMN BENTO LAYOUT */
+        /* -------------------------------------------------------------------------- */
+        .main-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        @media (max-width: 768px) {
-            .dashboard {
+        @media (max-width: 800px) {
+            .main-layout {
                 grid-template-columns: 1fr;
             }
         }
 
+        /* -------------------------------------------------------------------------- */
+        /* CARD STYLES (Soft, bubbly, clean) */
+        /* -------------------------------------------------------------------------- */
         .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            border-radius: var(--radius-main);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card h2 {
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            border-bottom: 2px solid var(--light);
-            padding-bottom: 10px;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(162, 189, 175, 0.4);
         }
 
+        /* Decorative Background Shapes */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(66, 184, 131, 0.03);
+            pointer-events: none;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* FORM INPUTS & INTERACTIVE ELEMENTS */
+        /* -------------------------------------------------------------------------- */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1.25rem;
         }
 
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 8px;
             font-weight: 600;
             font-size: 0.9rem;
+            color: var(--text-title);
+            margin-bottom: 0.5rem;
         }
 
-        .form-group input, .form-group select {
+        select, input {
+            font-family: inherit;
             width: 100%;
-            padding: 10px;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
             font-size: 1rem;
-            background: white;
+            padding: 0.85rem 1.2rem;
+            border: 2px solid #eef3f0;
+            border-radius: var(--radius-inner);
+            background: #f8faf9;
+            color: var(--text-title);
+            outline: none;
+            transition: var(--transition);
         }
 
+        select:focus, input:focus {
+            border-color: var(--primary-mint);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(66, 184, 131, 0.1);
+        }
+
+        /* Elegant illustration placeholders */
+        .vector-art {
+            background: #f4faf7;
+            border-radius: var(--radius-inner);
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #5c7e6f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Joyful Buttons */
         button {
+            font-family: inherit;
             width: 100%;
-            background: var(--primary);
-            color: white;
+            padding: 1rem;
             border: none;
-            padding: 12px;
+            border-radius: var(--radius-inner);
+            font-weight: 700;
             font-size: 1rem;
-            font-weight: 600;
-            border-radius: 6px;
             cursor: pointer;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
+            transition: var(--transition);
             color: white;
-            margin-left: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .status-normal { background-color: var(--success); }
-        .status-warning { background-color: var(--warning); color: #333; }
-        .status-danger { background-color: var(--danger); }
+        .btn-orange {
+            background: var(--btn-orange);
+        }
+        .btn-orange:hover {
+            background: #cf8340;
+            box-shadow: 0 6px 20px rgba(224, 150, 83, 0.3);
+        }
 
-        .history-table {
+        .btn-submit-bp { background: var(--bp-accent); }
+        .btn-submit-bp:hover { background: #357abd; box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3); }
+
+        .btn-submit-bs { background: var(--bs-accent); }
+        .btn-submit-bs:hover { background: #d3850e; box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3); }
+
+        /* -------------------------------------------------------------------------- */
+        /* VITALS ENTRY INNER GRID */
+        /* -------------------------------------------------------------------------- */
+        .vitals-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .vitals-tabs { grid-template-columns: 1fr; }
+        }
+
+        .sub-entry-card {
+            background: #fafcfb;
+            border: 1px solid #ebf2ee;
+            border-radius: var(--radius-inner);
+            padding: 1.25rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            padding-right: 3.5rem;
+        }
+
+        .input-wrapper .unit {
+            position: absolute;
+            right: 1.2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #9cb1a6;
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* HEALTH LOGS HISTORY TABLE */
+        /* -------------------------------------------------------------------------- */
+        .logs-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-main);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .history-table th, .history-table td {
-            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
         }
 
-        .history-table th {
-            background-color: var(--light);
+        th {
+            color: #799486;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            border-bottom: 2px solid #edf2ef;
         }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #f0f5f2;
+            color: var(--text-title);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-bp { background: #eef5fc; color: var(--bp-accent); }
+        .badge-bs { background: #fef5e7; color: var(--bs-accent); }
 
         .no-data {
             text-align: center;
-            color: #a0aec0;
-            padding: 20px;
-        }
-
-        .clear-btn {
-            background: #e2e8f0;
-            color: #4a5568;
-            margin-top: 10px;
+            padding: 3rem 1rem;
+            color: #9cb1a6;
+            font-style: italic;
         }
     </style>
 </head>
@@ -152,150 +330,229 @@
 
 <div class="container">
     <header>
-        <h1>🏠 Family Vitals Tracker</h1>
-        <p>Log and save daily health readings safely in your browser</p>
+        <div class="top-banner">✨ We care, together!</div>
+        <h1>Family Vitals Hub <span style="font-size: 2.3rem;">👥</span></h1>
+        <p>Keep your loved ones healthy, one consistent log at a time.</p>
     </header>
 
-    <div class="dashboard">
-        <div class="card">
-            <h2>Log New Readings</h2>
-            <form id="vitalsForm">
-                <!-- Added Family Member Selection -->
+    <div class="main-layout">
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div class="card-title">
+                    <span>👤</span> Active Profile
+                </div>
+                <div class="vector-art">
+                    🏡 Happy Family Dashboard
+                </div>
+                
                 <div class="form-group">
-                    <label for="name">Family Member</label>
-                    <select id="name" required>
-                        <option value="">Select Member...</option>
-                        <option value="Mom">Mom</option>
-                        <option value="Dad">Dad</option>
-                        <option value="Me">Me</option>
+                    <label for="memberSelect">Select Family Member</label>
+                    <select id="memberSelect" onchange="loadMemberLogs()">
+                        <option value="Father">👨‍💼 Father</option>
+                        <option value="Mother">👩‍💼 Mother</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="sugar">Blood Sugar (mg/dL)</label>
-                    <input type="number" id="sugar" placeholder="e.g., 100" required>
-                </div>
-                <div class="form-group">
-                    <label for="systolic">BP - Systolic (mmHg)</label>
-                    <input type="number" id="systolic" placeholder="e.g., 120" required>
-                </div>
-                <div class="form-group">
-                    <label for="diastolic">BP - Diastolic (mmHg)</label>
-                    <input type="number" id="diastolic" placeholder="e.g., 80" required>
-                </div>
-                <button type="submit">Save Log</button>
-            </form>
+            </div>
+
+            <button class="btn-orange" onclick="addNewMember()" style="margin-top: 1rem;">+ Add Family Member</button>
         </div>
 
         <div class="card">
-            <h2>Reference Ranges</h2>
-            <table class="history-table" style="font-size: 0.9rem;">
-                <tr>
-                    <td><strong>Sugar</strong></td>
-                    <td><span class="status-badge status-normal">Normal: &lt; 100</span></td>
-                    <td><span class="status-badge status-danger">High: 126+</span></td>
-                </tr>
-                <tr>
-                    <td><strong>BP</strong></td>
-                    <td><span class="status-badge status-normal">Normal: &lt; 120/80</span></td>
-                    <td><span class="status-badge status-danger">High: 130+/80+</span></td>
-                </tr>
-            </table>
-            <button class="clear-btn" onclick="clearLogs()">Clear All Saved Data</button>
+            <div class="card-title">
+                <span>📝</span> Quick Vitals Entry
+            </div>
+
+            <div class="vitals-tabs">
+                <div class="sub-entry-card">
+                    <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--bp-accent)">❤️ Blood Pressure</h3>
+                    <form id="bpForm" onsubmit="logBloodPressure(event)">
+                        <div class="form-group">
+                            <label>Systolic</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="systolic" required placeholder="120" min="50" max="250">
+                                <span class="unit">mmHg</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Diastolic</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="diastolic" required placeholder="80" min="30" max="150">
+                                <span class="unit">mmHg</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-submit-bp">Save BP</button>
+                    </form>
+                </div>
+
+                <div class="sub-entry-card">
+                    <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--bs-accent)">🩸 Blood Sugar</h3>
+                    <form id="bsForm" onsubmit="logBloodSugar(event)">
+                        <div class="form-group">
+                            <label>Sugar Level</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="sugarLevel" required placeholder="100" min="20" max="600">
+                                <span class="unit">mg/dL</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Context</label>
+                            <select id="sugarType">
+                                <option value="Fasting">🥦 Fasting</option>
+                                <option value="Post-Meal">🍕 Post-Meal</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit-bs">Save Sugar</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <h2>Reading History</h2>
-        <div style="overflow-x: auto;">
-            <table class="history-table">
+    <div class="logs-section">
+        <h2 class="card-title" style="margin-bottom: 0.5rem;">📊 Wellness History Logs</h2>
+        <div class="table-wrap">
+            <table id="logsTable">
                 <thead>
                     <tr>
                         <th>Date & Time</th>
-                        <th>Name</th>
-                        <th>Blood Sugar</th>
-                        <th>Blood Pressure</th>
+                        <th>Type</th>
+                        <th>Reading</th>
+                        <th>Context</th>
                     </tr>
                 </thead>
-                <tbody id="historyBody"></tbody>
+                <tbody id="logsBody">
+                    </tbody>
             </table>
+            <div id="noDataMessage" class="no-data">No wellness records logged for this member yet. Ready to start tracking!</div>
         </div>
     </div>
 </div>
 
 <script>
-    // Load existing logs from LocalStorage when page opens
-    let savedLogs = JSON.parse(localStorage.getItem('familyVitals')) || [];
+    // --------------------------------------------------------------------------
+    // LOCAL STORAGE JAVASCRIPT LOGIC
+    // --------------------------------------------------------------------------
+    window.onload = function() {
+        initializeMembers();
+        loadMemberLogs();
+    };
 
-    function renderTable() {
-        const historyBody = document.getElementById('historyBody');
-        if (savedLogs.length === 0) {
-            historyBody.innerHTML = `<tr><td colspan="4" class="no-data">No logs recorded yet. Data will save on this device.</td></tr>`;
+    function initializeMembers() {
+        let members = JSON.parse(localStorage.getItem('familyMembers'));
+        if (!members) {
+            members = ["Father", "Mother"];
+            localStorage.setItem('familyMembers', JSON.stringify(members));
+        }
+        renderMemberDropdown(members);
+    }
+
+    function renderMemberDropdown(members) {
+        const select = document.getElementById('memberSelect');
+        const currentValue = select.value;
+        select.innerHTML = '';
+        members.forEach(member => {
+            const option = document.createElement('option');
+            option.value = member.replace(/[^a-zA-Z0-9]/g, ""); // strip emojis for value keys
+            option.textContent = member.includes('‍♂️') || member.includes('🏽') ? member : `👤 ${member}`;
+            select.appendChild(option);
+        });
+        if (select.querySelector(`option[value="${currentValue}"]`)) {
+            select.value = currentValue;
+        }
+    }
+
+    function addNewMember() {
+        const name = prompt("Enter the family member's name (e.g. Grandma, Sister):");
+        if (name && name.trim() !== "") {
+            let members = JSON.parse(localStorage.getItem('familyMembers')) || [];
+            let cleanName = name.trim();
+            if (!members.includes(cleanName)) {
+                members.push(cleanName);
+                localStorage.setItem('familyMembers', JSON.stringify(members));
+                renderMemberDropdown(members);
+                document.getElementById('memberSelect').value = cleanName;
+                loadMemberLogs();
+            } else {
+                alert("This member profile already exists.");
+            }
+        }
+    }
+
+    function loadMemberLogs() {
+        const activeMember = document.getElementById('memberSelect').value;
+        const allLogs = JSON.parse(localStorage.getItem('familyVitalsLogs')) || [];
+        const memberLogs = allLogs.filter(log => log.member === activeMember);
+        
+        memberLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        const tbody = document.getElementById('logsBody');
+        const noData = document.getElementById('noDataMessage');
+        tbody.innerHTML = '';
+
+        if (memberLogs.length === 0) {
+            noData.style.display = 'block';
             return;
+        } else {
+            noData.style.display = 'none';
         }
 
-        historyBody.innerHTML = '';
-        savedLogs.forEach(log => {
+        memberLogs.forEach(log => {
             const row = document.createElement('tr');
+            const dateObj = new Date(log.timestamp);
+            const formattedDate = dateObj.toLocaleDateString() + ' @ ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            const typeBadge = log.type === 'Blood Pressure' 
+                ? `<span class="badge badge-bp">❤️ BP</span>` 
+                : `<span class="badge badge-bs">🩸 Sugar</span>`;
+
             row.innerHTML = `
-                <td>${log.date}</td>
-                <td><strong>${log.name}</strong></td>
-                <td>${log.sugar} mg/dL <span class="status-badge ${log.sugarClass}">${log.sugarStatus}</span></td>
-                <td>${log.systolic}/${log.diastolic} mmHg <span class="status-badge ${log.bpClass}">${log.bpStatus}</span></td>
+                <td>${formattedDate}</td>
+                <td>${typeBadge}</td>
+                <td style="font-weight: 700;">${log.reading}</td>
+                <td style="color: #799486; font-size: 0.9rem;">${log.context}</td>
             `;
-            historyBody.appendChild(row);
+            tbody.appendChild(row);
         });
     }
 
-    document.getElementById('vitalsForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const sugar = parseInt(document.getElementById('sugar').value);
-        const systolic = parseInt(document.getElementById('systolic').value);
-        const diastolic = parseInt(document.getElementById('diastolic').value);
-        
-        const now = new Date();
-        const dateTimeStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-        let sugarStatus = 'Normal', sugarClass = 'status-normal';
-        if (sugar >= 100 && sugar < 126) { sugarStatus = 'Prediabetes'; sugarClass = 'status-warning'; }
-        else if (sugar >= 126) { sugarStatus = 'High'; sugarClass = 'status-danger'; }
-
-        let bpStatus = 'Normal', bpClass = 'status-normal';
-        if ((systolic >= 120 && systolic <= 129) && diastolic < 80) { bpStatus = 'Elevated'; bpClass = 'status-warning'; }
-        else if (systolic >= 130 || diastolic >= 80) { bpStatus = 'High'; bpClass = 'status-danger'; }
-
-        // Create new log object
-        const newLog = {
-            date: dateTimeStr,
-            name: name,
-            sugar: sugar,
-            sugarStatus: sugarStatus,
-            sugarClass: sugarClass,
-            systolic: systolic,
-            diastolic: diastolic,
-            bpStatus: bpStatus,
-            bpClass: bpClass
-        };
-
-        // Add to the front of our array and save to local storage
-        savedLogs.unshift(newLog);
-        localStorage.setItem('familyVitals', JSON.stringify(savedLogs));
-
-        renderTable();
-        document.getElementById('vitalsForm').reset();
-    });
-
-    function clearLogs() {
-        if(confirm("Are you sure you want to delete all saved family logs?")) {
-            localStorage.removeItem('familyVitals');
-            savedLogs = [];
-            renderTable();
-        }
+    function saveLog(logEntry) {
+        const allLogs = JSON.parse(localStorage.getItem('familyVitalsLogs')) || [];
+        allLogs.push(logEntry);
+        localStorage.setItem('familyVitalsLogs', JSON.stringify(allLogs));
+        loadMemberLogs();
     }
 
-    // Initial render when opening the website
-    renderTable();
+    function logBloodPressure(e) {
+        e.preventDefault();
+        const activeMember = document.getElementById('memberSelect').value;
+        const sys = document.getElementById('systolic').value;
+        const dia = document.getElementById('diastolic').value;
+
+        saveLog({
+            member: activeMember,
+            type: 'Blood Pressure',
+            reading: `${sys}/${dia} mmHg`,
+            context: 'Normal Sitting check',
+            timestamp: new Date().toISOString()
+        });
+        document.getElementById('bpForm').reset();
+    }
+
+    function logBloodSugar(e) {
+        e.preventDefault();
+        const activeMember = document.getElementById('memberSelect').value;
+        const sugar = document.getElementById('sugarLevel').value;
+        const type = document.getElementById('sugarType').value;
+
+        saveLog({
+            member: activeMember,
+            type: 'Blood Sugar',
+            reading: `${sugar} mg/dL`,
+            context: type,
+            timestamp: new Date().toISOString()
+        });
+        document.getElementById('bsForm').reset();
+    }
 </script>
 
 </body>
