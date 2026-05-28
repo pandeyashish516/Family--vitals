@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Vitals Tracker</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: var(--dark);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .status-normal { background-color: var(--success); }
+        .status-warning { background-color: var(--warning); color: #333; }
+        .status-danger { background-color: var(--danger); }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .history-table th {
+            background-color: var(--light);
+        }
+
+        .no-data {
+            text-align: center;
+            color: #a0aec0;
+            padding: 20px;
+        }
+
+        .clear-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🏠 Family Vitals Tracker</h1>
+        <p>Log and save daily health readings safely in your browser</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="card">
+            <h2>Log New Readings</h2>
+            <form id="vitalsForm">
+                <!-- Added Family Member Selection -->
+                <div class="form-group">
+                    <label for="name">Family Member</label>
+                    <select id="name" required>
+                        <option value="">Select Member...</option>
+                        <option value="Mom">Mom</option>
+                        <option value="Dad">Dad</option>
+                        <option value="Me">Me</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sugar">Blood Sugar (mg/dL)</label>
+                    <input type="number" id="sugar" placeholder="e.g., 100" required>
+                </div>
+                <div class="form-group">
+                    <label for="systolic">BP - Systolic (mmHg)</label>
+                    <input type="number" id="systolic" placeholder="e.g., 120" required>
+                </div>
+                <div class="form-group">
+                    <label for="diastolic">BP - Diastolic (mmHg)</label>
+                    <input type="number" id="diastolic" placeholder="e.g., 80" required>
+                </div>
+                <button type="submit">Save Log</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Reference Ranges</h2>
+            <table class="history-table" style="font-size: 0.9rem;">
+                <tr>
+                    <td><strong>Sugar</strong></td>
+                    <td><span class="status-badge status-normal">Normal: &lt; 100</span></td>
+                    <td><span class="status-badge status-danger">High: 126+</span></td>
+                </tr>
+                <tr>
+                    <td><strong>BP</strong></td>
+                    <td><span class="status-badge status-normal">Normal: &lt; 120/80</span></td>
+                    <td><span class="status-badge status-danger">High: 130+/80+</span></td>
+                </tr>
+            </table>
+            <button class="clear-btn" onclick="clearLogs()">Clear All Saved Data</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Reading History</h2>
+        <div style="overflow-x: auto;">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Name</th>
+                        <th>Blood Sugar</th>
+                        <th>Blood Pressure</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Load existing logs from LocalStorage when page opens
+    let savedLogs = JSON.parse(localStorage.getItem('familyVitals')) || [];
+
+    function renderTable() {
+        const historyBody = document.getElementById('historyBody');
+        if (savedLogs.length === 0) {
+            historyBody.innerHTML = `<tr><td colspan="4" class="no-data">No logs recorded yet. Data will save on this device.</td></tr>`;
+            return;
+        }
+
+        historyBody.innerHTML = '';
+        savedLogs.forEach(log => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${log.date}</td>
+                <td><strong>${log.name}</strong></td>
+                <td>${log.sugar} mg/dL <span class="status-badge ${log.sugarClass}">${log.sugarStatus}</span></td>
+                <td>${log.systolic}/${log.diastolic} mmHg <span class="status-badge ${log.bpClass}">${log.bpStatus}</span></td>
+            `;
+            historyBody.appendChild(row);
+        });
+    }
+
+    document.getElementById('vitalsForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const sugar = parseInt(document.getElementById('sugar').value);
+        const systolic = parseInt(document.getElementById('systolic').value);
+        const diastolic = parseInt(document.getElementById('diastolic').value);
+        
+        const now = new Date();
+        const dateTimeStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        let sugarStatus = 'Normal', sugarClass = 'status-normal';
+        if (sugar >= 100 && sugar < 126) { sugarStatus = 'Prediabetes'; sugarClass = 'status-warning'; }
+        else if (sugar >= 126) { sugarStatus = 'High'; sugarClass = 'status-danger'; }
+
+        let bpStatus = 'Normal', bpClass = 'status-normal';
+        if ((systolic >= 120 && systolic <= 129) && diastolic < 80) { bpStatus = 'Elevated'; bpClass = 'status-warning'; }
+        else if (systolic >= 130 || diastolic >= 80) { bpStatus = 'High'; bpClass = 'status-danger'; }
+
+        // Create new log object
+        const newLog = {
+            date: dateTimeStr,
+            name: name,
+            sugar: sugar,
+            sugarStatus: sugarStatus,
+            sugarClass: sugarClass,
+            systolic: systolic,
+            diastolic: diastolic,
+            bpStatus: bpStatus,
+            bpClass: bpClass
+        };
+
+        // Add to the front of our array and save to local storage
+        savedLogs.unshift(newLog);
+        localStorage.setItem('familyVitals', JSON.stringify(savedLogs));
+
+        renderTable();
+        document.getElementById('vitalsForm').reset();
+    });
+
+    function clearLogs() {
+        if(confirm("Are you sure you want to delete all saved family logs?")) {
+            localStorage.removeItem('familyVitals');
+            savedLogs = [];
+            renderTable();
+        }
+    }
+
+    // Initial render when opening the website
+    renderTable();
+</script>
+
+</body>
+</html>
